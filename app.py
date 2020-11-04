@@ -11,12 +11,10 @@ import os
 import os.path
 import time
 import re
+import base64
 
 
 
-
-#upload file
-#ufile=st.sidebar.file_uploader('Upload',type=['csv','txt','xls','xlsx'])
 
 #load data from url
 @st.cache
@@ -24,6 +22,17 @@ def load_data():
     url='https://0e0c55ie39.execute-api.eu-central-1.amazonaws.com/default/fplAnalytics-DownloadPlayerStatusData'
     data=pd.read_csv(url)
     return data
+
+def download_link(object_to_download, download_filename, download_link_text):
+    
+    if isinstance(object_to_download,pd.DataFrame):
+        object_to_download = object_to_download.to_csv(index=False)
+
+    # some strings <-> bytes conversions necessary here
+    b64 = base64.b64encode(object_to_download.encode()).decode()
+
+    return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+
 
 def fpl():
     data=load_data()
@@ -132,14 +141,16 @@ def anal():
                 for i,j in g:
                     st.title(f"{i}")
                     st.table(j)
-            if st.button('Save file in xls format'):
+
+            if st.button('Download file as csv'):
                 g=df.groupby(columnss)
-                #today=date.today()
-                #foldername=datetime.strftime(today,"%Y-%m-%d %H:%M")
-                #os.mkdir(f"{foldername}")
                 for i,j in g:
-                    j.to_excel(f"{i}.xls",index=False)
-                st.success('file saved successfully....')
+                    tmp_download_link = download_link(j, f"{i}.csv", f"{i}.csv")
+                    st.markdown(tmp_download_link, unsafe_allow_html=True)    
+                            
+            
+              
+                          
         if st.checkbox('search email from a file'):
             col_search=df.columns
             for email in col_search:
@@ -150,6 +161,44 @@ def anal():
                     st.write(receiver)
                 
             st.warning('no email found in the file, Sorry :(')
+def anal1():
+    #file_uploader command from streamlit
+    anal=st.file_uploader('Choose a file',type=['xls','xlsx'])
+    if anal is not None:
+        #to eradicate errors    
+        anal.seek(0)
+        df=pd.read_excel(anal)
+      
+
+        
+        st.write('Some data are:')
+        st.dataframe(df.head(5)) 
+        if st.checkbox('Show in groups'):
+            columnss=st.selectbox('columns in the file are:',df.columns)
+            if st.button('Generate by columns'):
+                g=df.groupby(columnss)
+                for i,j in g:
+                    st.title(f"{i}")
+                    st.table(j)
+
+                
+            if st.button('Download file as csv'):
+                        g=df.groupby(columnss)
+                        #today=date.today()
+                        #foldername=datetime.strftime(today,"%Y-%m-%d %H:%M")
+                        #os.mkdir(f"{foldername}")
+                        for i,j in g:
+                            #j.to_excel(f"{i}.xls",index=False)
+                            tmp_download_link = download_link(j, f"{i}.csv", f"{i}.csv")
+                            st.markdown(tmp_download_link, unsafe_allow_html=True)    
+                                
+            
+            
+            
+                
+                
+
+
 
         
 def nepse():
@@ -216,19 +265,13 @@ def nepse():
             with open(t.src) as t:
                 components.html(t.read(), width=900, height=1000, scrolling=True)
                 
-                
-
-
-
-
-                
-                
+             
 def main():
       
     #menu in sidebar
     #st.sidebar.title("Menu")
     #menu choice in list
-    choice=st.sidebar.selectbox('Menu',['FPL','Explore','Nepse','Image to Pdf','About'])
+    choice=st.sidebar.selectbox('Menu',['FPL','Explore csv','Nepse','Explore excel','About'])
 
     if choice=='FPL':
         st.title('FPL analysis')
@@ -239,7 +282,7 @@ def main():
         * If you have any suggestion or words reach out the about section.
                 ''')
         fpl()
-    elif choice=='Explore':
+    elif choice=='Explore csv':
         st.title('Explore csv file and convert it into specific options as below:')  
         st.sidebar.markdown('''
         * Note: If the file is in xls format please change to csv file and upload it
@@ -259,22 +302,13 @@ def main():
         
         nepse()
     
-    elif choice=='Image to Pdf':
-        st.title('Convert image to pdf')
-        file_upload=st.file_uploader('Upload',type=['jpg','jpeg','png'])
-        
-        if file_upload is not None:
-           
-           if st.button('Save'):
-
-               im1 = Image.open(file_upload).convert("RGB")
-                #im2 = PIL.Image.open("2.jpg").convert("RGB")
-                #im3 = PIL.Image.open("3.jpg").convert("RGB")
-               images = [im1]
-               path=os.getcwd()
-               im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
-               st.info(f'file converted sucessfully to {path}')
-                         
+    elif choice=='Explore excel':
+        st.title('Explore csv file and convert it into specific options as below:')  
+        st.sidebar.markdown('''
+        * Note: If the file is in xls format please change to csv file and upload it
+        * check video to see how you can convert the excel file to csv format [youtube_link](https://youtu.be/QBN0M0Vxayc)
+                ''')
+        anal1()                 
            
 
 
