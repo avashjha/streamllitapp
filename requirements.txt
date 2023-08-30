@@ -1,5 +1,5 @@
 altair==4.1.0
-streamlit *
+streamlit==0.26.0
 pivottablejs==0.9.0
 pandas==1.1.3
 Pillow==8.0.1
