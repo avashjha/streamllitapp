@@ -1,7 +1,6 @@
 import streamlit as st
 from pivottablejs import pivot_ui
 import pandas as pd  
-import numpy as np
 from PIL import Image
 from datetime import datetime,date
 import random
@@ -11,11 +10,6 @@ import os
 import os.path
 import time
 import re
-
-#quick fix as numpy 1.20+ version have some depriciated errors.
-np.bool = np.bool_
-
-
 
 
 #upload file
