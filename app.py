@@ -12,6 +12,9 @@ import os.path
 import time
 import re
 
+#quick fix as numpy 1.20+ version have some depriciated errors.
+np.bool = np.bool_
+
 
 
 
