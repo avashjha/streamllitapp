@@ -1,7 +1,7 @@
 import streamlit as st
 from pivottablejs import pivot_ui
 import pandas as pd  
-#import numpy as np
+import numpy as np
 from PIL import Image
 from datetime import datetime,date
 import random
