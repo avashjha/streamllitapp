@@ -265,11 +265,9 @@ def main():
            if st.button('Save'):
 
                im1 = Image.open(file_upload).convert("RGB")
-                #im2 = PIL.Image.open("2.jpg").convert("RGB")
-                #im3 = PIL.Image.open("3.jpg").convert("RGB")
                images = [im1]
-               path=os.getcwd()
-               im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
+               
+               btn=st.download(im1.save(f"out.pdf", save_all=True, append_images=images)
                #im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
                #st.info(f'file converted sucessfully to {path}')
               
