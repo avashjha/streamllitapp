@@ -114,7 +114,7 @@ def fpl():
 
 def anal():
     #file_uploader command from streamlit
-    anal=st.file_uploader('Choose a file',type=['csv'])
+    anal=st.file_uploader('Choose a file',type=['csv','xls','xlsx'])
     if anal is not None:
         #to eradicate errors    
         anal.seek(0)
