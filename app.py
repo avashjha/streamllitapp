@@ -267,9 +267,9 @@ def main():
 
                im1 = Image.open(file_upload).convert("RGB")
                images = [im1]
-               im1.save(f"out.pdf",save_all=True,append_images=images)
+               r=im1.save(f"out.pdf",save_all=True,append_images=images)
                output_buffer = io.BytesIO()
-               pdf_file.save(output_buffer)
+               r.save(output_buffer)
                pdf_bytes = output_buffer.getvalue()
                st.download_button(label="Download Image",data=pdf_bytes,file_name="Test.pdf",mime="application/pdf")
 
