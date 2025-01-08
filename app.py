@@ -148,12 +148,13 @@ def anal():
                             j.to_excel(writer, index=False, sheet_name=str(i))
             
                             # Get the binary content of the buffer
+                            writer.close()
                             output_buffer.seek(0)
-                            file_name = f"{i}.xls"
+                            
             
             
                             st.download_button(
-                                label=f"Download {file_name}",
+                                label=f"Download {i}",
                                 data=output_buffer,
                                 file_name=file_name,
                                 mime="application/vnd.ms-excel"
