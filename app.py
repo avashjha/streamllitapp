@@ -118,8 +118,7 @@ def anal():
     if anal is not None:
         #to eradicate errors    
         anal.seek(0)
-        try:
-            df=pd.read_csv(anal,low_memory=False)
+        df=pd.read_csv(anal,low_memory=False)
         
 
         
