@@ -267,7 +267,7 @@ def main():
 
                im1 = Image.open(file_upload).convert("RGB")
                images = [im1]
-               pdf_file=im1.save(f"out.pdf",save_all=True)
+               im1.save(f"out.pdf",save_all=True,append_images=images)
                output_buffer = io.BytesIO()
                pdf_file.save(output_buffer)
                pdf_bytes = output_buffer.getvalue()
