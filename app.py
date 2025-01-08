@@ -263,16 +263,15 @@ def main():
 
         if file_upload is not None:
             if st.button('Save'):
-            # Open the image and convert to RGB
-            im1 = Image.open(file_upload).convert("RGB")
+                im1 = Image.open(file_upload).convert("RGB")
             
             # Save the image as a PDF to a BytesIO object
-            output_buffer = io.BytesIO()
-            im1.save(output_buffer, format="PDF")
-            output_buffer.seek(0)
+                output_buffer = io.BytesIO()
+                im1.save(output_buffer, format="PDF")
+                output_buffer.seek(0)
             
             # Provide a download button
-            st.download_button(
+                st.download_button(
                 label="Download PDF",
                 data=output_buffer,
                 file_name="Test.pdf",
