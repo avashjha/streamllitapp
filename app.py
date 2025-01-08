@@ -10,6 +10,7 @@ import os
 import os.path
 import time
 import re
+import io
 
 
 #upload file
