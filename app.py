@@ -260,26 +260,26 @@ def main():
     elif choice=='Image to Pdf':
         st.title('Convert image to pdf')
         file_upload=st.file_uploader('Upload',type=['jpg','jpeg','png'])
-        
+
         if file_upload is not None:
-           
-           if st.button('Save'):
-
-               im1 = Image.open(file_upload).convert("RGB")
-               images = [im1]
-               r=im1.save(f"out.pdf",save_all=True,append_images=images)
-               output_buffer = io.BytesIO()
-               r.save(output_buffer)
-               pdf_bytes = output_buffer.getvalue()
-               st.download_button(label="Download Image",data=pdf_bytes,file_name="Test.pdf",mime="application/pdf")
-
-
-
-    
-               #btn=st.download_button(label="Download Image",data=im1.save(f"out.pdf", save_all=True, append_images=images),mime="application/octet-stream")
-               #im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
-               #st.info(f'file converted sucessfully to {path}')
-
+            if st.button('Save'):
+            # Open the image and convert to RGB
+            im1 = Image.open(file_upload).convert("RGB")
+            
+            # Save the image as a PDF to a BytesIO object
+            output_buffer = io.BytesIO()
+            im1.save(output_buffer, format="PDF")
+            output_buffer.seek(0)
+            
+            # Provide a download button
+            st.download_button(
+                label="Download PDF",
+                data=output_buffer,
+                file_name="Test.pdf",
+                mime="application/pdf"
+            )
+        
+               
             
                                  
                
