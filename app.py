@@ -131,14 +131,40 @@ def anal():
                 for i,j in g:
                     st.title(f"{i}")
                     st.table(j)
+            # if st.button('Save file in xls format'):
+            #     g=df.groupby(columnss)
+            #     #today=date.today()
+            #     #foldername=datetime.strftime(today,"%Y-%m-%d %H:%M")
+            #     #os.mkdir(f"{foldername}")
+            #     for i,j in g:
+                    
+            #         j.to_excel(f"{i}.xls",index=False)
+            #     st.success('file saved successfully....')
             if st.button('Save file in xls format'):
-                g=df.groupby(columnss)
-                #today=date.today()
-                #foldername=datetime.strftime(today,"%Y-%m-%d %H:%M")
-                #os.mkdir(f"{foldername}")
-                for i,j in g:
-                    j.to_excel(f"{i}.xls",index=False)
-                st.success('file saved successfully....')
+                if 'df' in locals():  # Ensure `df` exists
+                    g = df.groupby(columnss)
+                    download_links = []  # Store download links for all files
+                    for i, j in g:
+                        output_buffer = io.BytesIO()
+                        with pd.ExcelWriter(output_buffer, engine='xlsxwriter') as writer:
+                            j.to_excel(writer, index=False, sheet_name=str(i))
+            
+                            # Get the binary content of the buffer
+                            output_buffer.seek(0)
+                            file_name = f"{i}.xls"
+            
+            # Add a download button for each group
+                            st.download_button(
+                                label=f"Download {file_name}",
+                                data=output_buffer,
+                                file_name=file_name,
+                                mime="application/vnd.ms-excel"
+                            )
+                        
+                            st.success('Files saved successfully with download links.')
+                        else:
+                            st.error("No dataframe available. Ensure `df` is loaded.")
+                
         if st.checkbox('search email from a file'):
             col_search=df.columns
             for email in col_search:
