@@ -114,14 +114,13 @@ def fpl():
 
 def anal():
     #file_uploader command from streamlit
-    anal=st.file_uploader('Choose a file',type=['csv','xls','xlsx'])
+    anal=st.file_uploader('Choose a file',type=['csv'])
     if anal is not None:
         #to eradicate errors    
         anal.seek(0)
         try:
             df=pd.read_csv(anal,low_memory=False)
-        except:
-            df=pd.read_excel(anal,low_memory=False)
+        
 
         
         st.write('Some data are:')
