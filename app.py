@@ -156,7 +156,7 @@ def anal():
                             st.download_button(
                                 label=f"Download {i}",
                                 data=output_buffer,
-                                file_name=f"{i}",
+                                file_name=f"{i}.xlsx",
                                 mime="application/vnd.ms-excel"
                             )
                         
