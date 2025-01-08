@@ -268,11 +268,12 @@ def main():
                 #im2 = PIL.Image.open("2.jpg").convert("RGB")
                 #im3 = PIL.Image.open("3.jpg").convert("RGB")
                images = [im1]
-               path=os.getcwd()
-               im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
-               st.info(f'file converted sucessfully to {path}')
+               st.download_button(label="Download image",data=images,file_name=f"{images}",mime="image/pdf",)
+                #path=os.getcwd()
+               #im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
+               #st.info(f'file converted sucessfully to {path}')
                          
-           
+               
 
 
         
