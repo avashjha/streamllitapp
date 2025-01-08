@@ -118,8 +118,10 @@ def anal():
     if anal is not None:
         #to eradicate errors    
         anal.seek(0)
-        df=pd.read_csv(anal,low_memory=False)
-      
+        try:
+            df=pd.read_csv(anal,low_memory=False)
+        except:
+            df=pd.read_excel(anal,low_memory=False)
 
         
         st.write('Some data are:')
