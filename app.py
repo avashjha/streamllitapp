@@ -266,13 +266,21 @@ def main():
 
                im1 = Image.open(file_upload).convert("RGB")
                images = [im1]
-               
-               btn=st.download_button(label="Download Image",data=im1.save(f"out.pdf", save_all=True, append_images=images),mime="application/octet-stream")
+               im1.save(f"out.pdf",save_all=True,appen_images=images)
+               output_buffer = io.BytesIO()
+               pdf_file.save(output_buffer)
+               pdf_bytes = output_buffer.getvalue()
+               st.download_button(label="Download Image",data=pdf_bytes,file_name="Highlighted Script.pdf",mime="application/pdf")
+
+
+
+    
+               #btn=st.download_button(label="Download Image",data=im1.save(f"out.pdf", save_all=True, append_images=images),mime="application/octet-stream")
                #im1.save(f"{path}/out.pdf", save_all=True, append_images=images)
                #st.info(f'file converted sucessfully to {path}')
-              
-               
-                         
+
+            
+                                 
                
 
 
